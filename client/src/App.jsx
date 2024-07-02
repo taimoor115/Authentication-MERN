@@ -4,6 +4,10 @@ import Home from "./components/Home";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
 import "./App.css";
+import axios from "axios";
+
+axios.defaults.baseURL = "http://localhost:8080";
+axios.defaults.withCredentials = true;
 
 const App = () => {
   return (

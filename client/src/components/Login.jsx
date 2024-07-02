@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useState } from "react";
 
 const Login = () => {
@@ -8,6 +9,7 @@ const Login = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(data);
+    axios.get("/");
   };
   return (
     <div>
