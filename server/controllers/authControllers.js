@@ -1,4 +1,5 @@
 const User = require("../models/user");
+const { hashPassword, comparePassword } = require("../helpers/auth");
 
 module.exports.test = (req, res) => {
   res.json("Test is working fine...");
@@ -6,7 +7,6 @@ module.exports.test = (req, res) => {
 
 module.exports.registerUser = async (req, res) => {
   const { username, email, password } = req.body;
-  console.log(req.body);
 
   try {
     if (!username) {
@@ -26,10 +26,12 @@ module.exports.registerUser = async (req, res) => {
       });
     }
 
+    const hashedPassword = await hashPassword(password);
+
     const user = await User.create({
       username,
       email,
-      password,
+      password: hashedPassword,
     });
     return res.json(user);
   } catch (error) {
