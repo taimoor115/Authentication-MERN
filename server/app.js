@@ -4,7 +4,10 @@ const cors = require("cors");
 const authRoutes = require("../server/routes/authRoutes");
 const mongoose = require("mongoose");
 const app = express();
+const cookieParser = require("cookie-parser");
 // middleware
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
 app.use(express.json());
 async function main() {
   await mongoose.connect(process.env.MONGO_URL);

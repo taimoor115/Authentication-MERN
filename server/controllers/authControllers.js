@@ -1,6 +1,7 @@
 const User = require("../models/user");
 const { hashPassword, comparePassword } = require("../helpers/auth");
-
+const jwt = require("jsonwebtoken");
+require("dotenv").config();
 module.exports.test = (req, res) => {
   res.json("Test is working fine...");
 };
@@ -49,8 +50,22 @@ module.exports.loginUser = async (req, res) => {
       });
     }
     const match = await comparePassword(password, user.password);
+    if (!match) {
+      return res.json({
+        error: "Wrong Password",
+      });
+    }
+
     if (match) {
-      res.json("matched password");
+      jwt.sign(
+        { email: user.email, id: user._id, username: user.username },
+        process.env.JWT_SECRET,
+        {},
+        (err, token) => {
+          if (err) throw err;
+          res.cookie("token", token).json(user);
+        }
+      );
     }
   } catch (error) {
     console.log(error);
