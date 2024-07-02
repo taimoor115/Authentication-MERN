@@ -38,3 +38,21 @@ module.exports.registerUser = async (req, res) => {
     console.log(error);
   }
 };
+
+module.exports.loginUser = async (req, res) => {
+  const { email, password } = req.body;
+  try {
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.json({
+        error: "User not found",
+      });
+    }
+    const match = await comparePassword(password, user.password);
+    if (match) {
+      res.json("matched password");
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
