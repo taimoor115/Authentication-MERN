@@ -13,5 +13,6 @@ router.use(
 router.get("/", authControllers.test);
 router.post("/signup", authControllers.registerUser);
 router.post("/login", authControllers.loginUser);
+router.get("/profile", authControllers.getProfile);
 
 module.exports = router;
