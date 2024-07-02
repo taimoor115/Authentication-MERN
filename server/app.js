@@ -1,9 +1,21 @@
 const express = require("express");
-const dotenv = require("dotenv").config();
+require("dotenv").config();
 const cors = require("cors");
 const authRoutes = require("../server/routes/authRoutes");
-
+const mongoose = require("mongoose");
 const app = express();
+// middleware
+app.use(express.json());
+async function main() {
+  await mongoose.connect(process.env.MONGO_URL);
+}
+main()
+  .then(() => {
+    console.log("Mongo is connected...");
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 
 app.use("/", authRoutes);
 

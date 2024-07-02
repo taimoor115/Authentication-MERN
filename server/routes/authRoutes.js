@@ -11,5 +11,6 @@ router.use(
 );
 
 router.get("/", authControllers.test);
+router.post("/login", authControllers.registerUser);
 
 module.exports = router;
